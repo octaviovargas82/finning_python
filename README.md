@@ -19,7 +19,7 @@ In **finning_constants.py** you need to set value of **ACCEPTED_PERCENTAGE** if 
 
 For logging I'm using **flask** logging from **sap.cf_logging**. 
 
-Accoding with this page
+According with this page
 
 https://github.com/SAP/cf-python-logging-support/blob/master/README.rst
 
