@@ -7,6 +7,4 @@ applications:
   buildpacks: 
   - python_buildpack
   command: python server.py
-  services:
-    - pyhana
-    - pyuaa 
+  
