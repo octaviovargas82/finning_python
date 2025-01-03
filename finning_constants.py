@@ -23,3 +23,13 @@ ZSAN_TYP_DICTIONARY= {
                         'ZNOTESADI': 'Notas Adicionales',
                         'ZNOTESIIM': 'Notes Invoice Timing'
                     }
+
+
+LINKING_WORDS = (
+	"EL",
+    "LA",
+    "LOS",
+    "QUE",
+    ":",
+    "AL"
+)

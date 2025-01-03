@@ -1,11 +1,21 @@
 #This file contains all the methods used in the application
 import logging
+import flask
 import requests
 from thefuzz import fuzz
+from sap.cf_logging import flask_logging
 import finning_constants
 import finning_queries
 import datetime
+import re
 
+#documentation for flask can be found here
+#https://github.com/SAP/cf-python-logging-support/blob/master/README.rst
+#and according with docmmentation flask works with nortmal python logs and stores them in sap
+
+#using flask_logging from sap.cf_logging library,
+app = flask.Flask(__name__)
+flask_logging.init(app, logging.INFO)
 
 t = datetime.datetime.now()
 finning_file_error = f"{finning_constants.LOG_FOLDER}finning_{str(t.year)}_{str(t.month)}_{str(t.day)}_{str(t.hour)}_{str(t.minute)}_{str(t.second)}.err"
@@ -29,54 +39,25 @@ def get_error_log():
     return error_string
 
 
-def get_logger_error(    
+def get_logger(    
         LOG_FORMAT     = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-        LOG_NAME       = '',
-        LOG_FILE_ERROR = finning_file_error):
-
-    log           = logging.getLogger(LOG_NAME)
-    log_formatter = logging.Formatter(LOG_FORMAT)
-    #log.setLevel(logging.ERROR)
-
-    # comment this to suppress console output
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(log_formatter)
-    log.addHandler(stream_handler)
+        LOG_NAME       = ''):
     
-    file_handler_error = logging.FileHandler(LOG_FILE_ERROR, mode='w')
-    file_handler_error.setFormatter(log_formatter)
-    file_handler_error.setLevel(logging.ERROR)
-    log.addHandler(file_handler_error)
-
-    log.setLevel(logging.INFO)
-
-    return log
-
-def get_logger_info(    
-        LOG_FORMAT     = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-        LOG_NAME       = '',
-        LOG_FILE_INFO  = finning_file_info):
-
-    log           = logging.getLogger(LOG_NAME)
-    log_formatter = logging.Formatter(LOG_FORMAT)
-    
-
-    # comment this to suppress console output
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(log_formatter)
-    log.addHandler(stream_handler)
-
-    file_handler_info = logging.FileHandler(LOG_FILE_INFO, mode='w')
-    file_handler_info.setFormatter(log_formatter)
-    file_handler_info.setLevel(logging.INFO)
-    log.addHandler(file_handler_info)
-    
-
-    log.setLevel(logging.INFO)
-
-    return log
+        logger = logging.getLogger(LOG_NAME)
+        logger.info(LOG_FORMAT)
+        
+        return logger
 
 sentiments_dict = dict()
+
+#remove special characteras and linking words
+def remove_special_characters_and_linking_words(comment):
+    rest = []
+    comment_filtered = re.sub(r'[^\w\s]', '', comment)
+    for word in comment_filtered.split():
+        if word.strip().upper() not in finning_constants.LINKING_WORDS:
+            rest.append(word)
+    return ' '.join(rest)
 
 #Identify which Notes cateogries we are using to avoid use all of them, for performance
 def generateSentimentsDictionary(keywords): 
@@ -100,7 +81,9 @@ def get_classification(comment, sentiments_filtered):
     sorted_array = dict() 
     if (len(comment.strip())>0):
         for w in sentiments_filtered:
-           percentage = fuzz.token_sort_ratio(comment, w["ZSAN_KEY"])
+           #removing special characters and linking words
+           comment_filtered = remove_special_characters_and_linking_words(comment) 
+           percentage = fuzz.token_sort_ratio(comment_filtered, w["ZSAN_KEY"])
            w["percentage"]=percentage
            if("sentiment" in sorted_array):
                 prevSentiment = sorted_array.get("sentiment")
@@ -129,13 +112,12 @@ def clasify_comment(type, comment):
             if(sentiment_classification != finning_constants.DESCONOCIDO):
                 if(sentiment_classification["sentiment"]["ZSAN_RES"] == finning_constants.POSITIVO 
                    or sentiment_classification["sentiment"]["ZSAN_RES"] == finning_constants.NEGATIVO):
-                     sentiments_found.append({"Type":sentiment_classification["sentiment"]["ZSAN_RES"], "Label":sentiment_classification["sentiment"]["ZSAN_LAB"]})
+                     sentiments_found.append({"Type":sentiment_classification["sentiment"]["ZSAN_RES"], "Label":sentiment_classification["sentiment"]["ZSAN_KEY"]})
     return sentiments_found       
 
-def insert_data(pollId, note_type, sentiment, comments):
-    
-    if(len(pollId.strip())!=0 and len(note_type.strip())!=0 and len(sentiment)!=0 and len(sentiment.strip())!=0 and len(comments.strip())!=0):
-        insert_query='UPSERT "SAPDB1"."TB_MKT_SAN_RES" VALUES (\''+pollId.strip()+'\',\''+note_type.strip()+'\',\''+sentiment.strip().upper()+'\',\''+comments.strip()+'\') WITH PRIMARY KEY;'
+def insert_data(pollId, note_type, sentiment, key_words):
+    if(len(pollId.strip())!=0 and len(note_type.strip())!=0 and len(sentiment)!=0 and len(sentiment.strip())!=0 and len(key_words.strip())!=0):
+        insert_query='UPSERT "SAPDB1"."TB_MKT_SAN_RES" VALUES (\''+pollId.strip()+'\',\''+note_type.strip()+'\',\''+sentiment.strip().upper()+'\',\''+key_words.strip()+'\') WITH PRIMARY KEY;'
         response = session.post(finning_queries.SERVICE_END_POINT, data=insert_query)
         rj= response.json()["success"]
         if(rj):
