@@ -29,5 +29,7 @@ LINKING_WORDS = (
 	    "LA",
 	    "LOS",
 	    "QUE",
-	    "AL"
+	    "AL",
+	    "O",
+	    "Y"
 )
