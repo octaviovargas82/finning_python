@@ -10,7 +10,7 @@ import re
 
 #documentation for flask can be found here
 #https://github.com/SAP/cf-python-logging-support/blob/master/README.rst
-#and according with docmmentation flask works with nortmal python logs and stores them in sap
+#and according with docmmentation flask works with normal python logs and stores them in sap
 
 #using flask_logging from sap.cf_logging library,
 app = flask.Flask(__name__)
