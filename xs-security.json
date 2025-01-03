@@ -1,5 +1,5 @@
 {
-    "xsappname" : "finning sentiment analysis",
+    "xsappname" : "finning_sentiment_analysis",
     "tenant-mode" : "dedicated",
     "oauth2-configuration": {
       "redirect-uris": [
