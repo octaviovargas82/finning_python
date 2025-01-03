@@ -5,7 +5,6 @@ POSITIVO = 'Positivo'
 SIN_COMENTARIOS ='Sin Comentarios'
 DESCONOCIDO = "Desconocido"
 ACCEPTED_PERCENTAGE = 50
-LOG_FOLDER = ""
 
 
 ZSAN_TYP_DICTIONARY= {
