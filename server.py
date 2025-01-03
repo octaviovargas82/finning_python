@@ -1,5 +1,5 @@
 import os
-import main from finning_main
+from finning_main import main
 from flask import Flask
 from cfenv import AppEnv
 
