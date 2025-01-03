@@ -4,6 +4,7 @@ import flask
 import requests
 from thefuzz import fuzz
 from sap.cf_logging import flask_logging
+from flask.logging import default_handler
 import finning_constants
 import finning_queries
 import re
@@ -40,11 +41,12 @@ def get_error_log():
 def get_logger(    
         LOG_FORMAT     = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
         LOG_NAME       = ''):
-    
-        logger = logging.getLogger(LOG_NAME)
-        logger.info(LOG_FORMAT)
+
+        app.logger.addHandler(default_handler)
+        app.logger = logging.getLogger(LOG_NAME)
+        app.logger.info(LOG_FORMAT)
         
-        return logger
+        return app.logger
 
 sentiments_dict = dict()
 
