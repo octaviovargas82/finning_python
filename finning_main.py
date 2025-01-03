@@ -157,27 +157,27 @@ while len(sentiments)>0:
                if(len(finning_helper.get_info_log())>0):
                     info_string.append(finning_helper.get_info_log())
 
-          if(len(error_string)>0):
-               str_err=""
-               for err in error_string:
-                    if(len(err)>0):
-                         for in_err in err:
-                              t = datetime.datetime.now()
-                              str_err += f"{t}-{in_err}\n"
+     if(len(error_string)>0):
+          str_err=""
+          for err in error_string:
+               if(len(err)>0):
+                    for in_err in err:
+                         t = datetime.datetime.now()
+                         str_err += f"{t}-{in_err}\n"
 
-               my_error_logger = finning_helper.get_logger(LOG_NAME="finning_errors.logger")
-               my_error_logger.error(str_err)
+          my_error_logger = finning_helper.get_logger(LOG_NAME="finning_errors.logger")
+          my_error_logger.error(str_err)
 
-          if(len(info_string)>0):
-               str_log=""
-               for log in info_string:
-                         if(len(log)>0):
-                              for in_log in log:
-                                   t = datetime.datetime.now()
-                                   str_log += f"{t}-{in_log}\n"
+     if(len(info_string)>0):
+          str_log=""
+          for log in info_string:
+               if(len(log)>0):
+                    for in_log in log:
+                         t = datetime.datetime.now()
+                         str_log += f"{t}-{in_log}\n"
                               
-               my_info_logger = finning_helper.get_logger(LOG_NAME="finning_logs.logger")
-               my_info_logger.info(str(str_log))
+          my_info_logger = finning_helper.get_logger(LOG_NAME="finning_logs.logger")
+          my_info_logger.info(str(str_log))
     
      #Validate again if there are more records in SAP HANA to loop again
      sentiments_response = finning_helper.session.post(finning_queries.SERVICE_END_POINT, data=finning_queries.SENTIMENTS_QUERY)
