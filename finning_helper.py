@@ -6,7 +6,6 @@ from thefuzz import fuzz
 from sap.cf_logging import flask_logging
 import finning_constants
 import finning_queries
-import datetime
 import re
 
 #documentation for flask can be found here
@@ -16,11 +15,6 @@ import re
 #using flask_logging from sap.cf_logging library,
 app = flask.Flask(__name__)
 flask_logging.init(app, logging.INFO)
-
-t = datetime.datetime.now()
-finning_file_error = f"{finning_constants.LOG_FOLDER}finning_{str(t.year)}_{str(t.month)}_{str(t.day)}_{str(t.hour)}_{str(t.minute)}_{str(t.second)}.err"
-finning_file_info = f"{finning_constants.LOG_FOLDER}finning_{str(t.year)}_{str(t.month)}_{str(t.day)}_{str(t.hour)}_{str(t.minute)}_{str(t.second)}.log"
-
 
 info_string=[]
 error_string=[]
