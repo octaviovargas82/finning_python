@@ -26,10 +26,10 @@ ZSAN_TYP_DICTIONARY= {
 
 
 LINKING_WORDS = (
-	"EL",
-    "LA",
-    "LOS",
-    "QUE",
-    ":",
-    "AL"
+	    "EL",
+	    "LA",
+	    "LOS",
+	    "QUE",
+	    ":",
+	    "AL"
 )
