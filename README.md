@@ -17,10 +17,7 @@ In **finning_constants.py** you need to set value of **ACCEPTED_PERCENTAGE** if 
 
 **Logs:**
 
-The application will save logs for **successfully** queries and also for **errors**.
-
-File with **success** events will have extension **.log**
-
-File with **errors** will have extension **.err**
-
-In **finning_constants.py** you need to declare a **valid path** with **write permissions** to create the log files in variable **LOG_FOLDER**. 
+For logging I'm using **flask** logging from **sap.cf_logging**. 
+Accoding with this page
+https://github.com/SAP/cf-python-logging-support/blob/master/README.rst
+I can use it along normal python logs 
