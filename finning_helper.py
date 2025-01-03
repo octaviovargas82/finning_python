@@ -25,20 +25,24 @@ finning_file_info = f"{finning_constants.LOG_FOLDER}finning_{str(t.year)}_{str(t
 info_string=[]
 error_string=[]
 
+#put logs by sentiment type    
 def put_info_log(info):
     info_string.append(info)
     
-    
+#return logs by sentiment type    
 def get_info_log():
     return info_string        
-    
+
+#put errors by sentiment type    
 def put_error_log(error):
     error_string.append(error)
 
+#return errors by sentiment type    
 def get_error_log():
     return error_string
 
 
+#method to save logs
 def get_logger(    
         LOG_FORMAT     = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
         LOG_NAME       = ''):
@@ -99,6 +103,7 @@ def get_classification(comment, sentiments_filtered):
     return finning_constants.DESCONOCIDO     
 
 
+#Clasify if a comment is positive, negative or unknown
 def clasify_comment(type, comment):
     sentiments_found=[]
     if (len(comment.strip())==0):
@@ -115,6 +120,7 @@ def clasify_comment(type, comment):
                      sentiments_found.append({"Type":sentiment_classification["sentiment"]["ZSAN_RES"], "Label":sentiment_classification["sentiment"]["ZSAN_KEY"]})
     return sentiments_found       
 
+#Send processed data to be inserted in Hana
 def insert_data(pollId, note_type, sentiment, key_words):
     if(len(pollId.strip())!=0 and len(note_type.strip())!=0 and len(sentiment)!=0 and len(sentiment.strip())!=0 and len(key_words.strip())!=0):
         insert_query='UPSERT "SAPDB1"."TB_MKT_SAN_RES" VALUES (\''+pollId.strip()+'\',\''+note_type.strip()+'\',\''+sentiment.strip().upper()+'\',\''+key_words.strip()+'\') WITH PRIMARY KEY;'
@@ -125,7 +131,8 @@ def insert_data(pollId, note_type, sentiment, key_words):
         else:  
           put_error_log(f'There was an error while trying to save the data {insert_query}:{response.json()["details"]}')
 
- 
+
+#get access token to start the session
 def get_access_token(url, client_id, client_secret):
     response = requests.post(
         url,
