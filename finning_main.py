@@ -7,23 +7,24 @@ import finning_constants
 import finning_queries
 import finning_helper
 
-info_string=[]
-error_string=[]
-
-key_words_response = finning_helper.session.post(finning_queries.SERVICE_END_POINT, data=finning_queries.KEY_WORDS_QUERY)
-keywords_data = json.dumps(key_words_response.json())
-keywords_dict = ast.literal_eval(keywords_data)
-keywords = keywords_dict["ROOT"]["select_response"]["row"]
-
-#generate dictionary of keywords to search
-finning_helper.generateSentimentsDictionary(keywords)    
-
-sentiments_response = finning_helper.session.post(finning_queries.SERVICE_END_POINT, data=finning_queries.SENTIMENTS_QUERY)
-sentiments_report_data = json.dumps(sentiments_response.json())
-sentiment_dict = ast.literal_eval(sentiments_report_data)
-sentiments = sentiment_dict["ROOT"]["select_response"]["row"]
-
 def main():
+
+     info_string=[]
+     error_string=[]
+
+     key_words_response = finning_helper.session.post(finning_queries.SERVICE_END_POINT, data=finning_queries.KEY_WORDS_QUERY)
+     keywords_data = json.dumps(key_words_response.json())
+     keywords_dict = ast.literal_eval(keywords_data)
+     keywords = keywords_dict["ROOT"]["select_response"]["row"]
+
+     #generate dictionary of keywords to search
+     finning_helper.generateSentimentsDictionary(keywords)    
+
+     sentiments_response = finning_helper.session.post(finning_queries.SERVICE_END_POINT, data=finning_queries.SENTIMENTS_QUERY)
+     sentiments_report_data = json.dumps(sentiments_response.json())
+     sentiment_dict = ast.literal_eval(sentiments_report_data)
+     sentiments = sentiment_dict["ROOT"]["select_response"]["row"]
+
      #while SAP HANA query returns records
      while len(sentiments)>0:
           #validate each poll
