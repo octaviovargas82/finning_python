@@ -1,7 +1,7 @@
 # finning_python
 Python code for finning sentiment analysis 
 
-Using **Python 3.8.5** which is the latest more stable
+Using **Python 3.8.19** which is the latest more stable
 
 
 
