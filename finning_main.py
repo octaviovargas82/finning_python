@@ -159,26 +159,6 @@ def main():
                     if(len(finning_helper.get_info_log())>0):
                          info_string.append(finning_helper.get_info_log())
 
-               if(poll["ZNOTESPRO"]):
-                    classification = finning_helper.clasify_comment("ZNOTESPRO", poll["ZNOTESPRO"])
-                    if(len(classification)==0):
-                         classification.append({"Type":finning_constants.DESCONOCIDO,"Label":finning_constants.DESCONOCIDO})
-                    finning_helper.insert_data(poll["ZSURVRECO"], finning_constants.ZSAN_TYP_DICTIONARY["ZNOTESPRO"],  classification[0]['Type'], classification[0]['Label'])
-                    if(len(finning_helper.get_error_log())>0):
-                         error_string.append(finning_helper.get_error_log())
-                    if(len(finning_helper.get_info_log())>0):
-                         info_string.append(finning_helper.get_info_log())
-               
-               if(poll["ZNOTESAVE"]):
-                    classification = finning_helper.clasify_comment("ZNOTESAVE", poll["ZNOTESAVE"])
-                    if(len(classification)==0):
-                         classification.append({"Type":finning_constants.DESCONOCIDO,"Label":finning_constants.DESCONOCIDO})
-                    finning_helper.insert_data(poll["ZSURVRECO"], finning_constants.ZSAN_TYP_DICTIONARY["ZNOTESAVE"],  classification[0]['Type'], classification[0]['Label'])
-                    if(len(finning_helper.get_error_log())>0):
-                         error_string.append(finning_helper.get_error_log())
-                    if(len(finning_helper.get_info_log())>0):
-                         info_string.append(finning_helper.get_info_log())
-
           if(len(error_string)>0):
                str_err=""
                for err in error_string:
