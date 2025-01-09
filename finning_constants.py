@@ -20,9 +20,7 @@ ZSAN_TYP_DICTIONARY= {
                         'ZNOTESCOM': 'Notas Comunicación',
                         'ZNOTESAVA': 'Notas Disponibilidad',
                         'ZNOTESADI': 'Notas Adicionales',
-                        'ZNOTESIIM': 'Notes Invoice Timing',
-			'ZNOTESPRO': 'Notas Prominente',
-                        'ZNOTESAVE': 'Notas Average'   
+                        'ZNOTESIIM': 'Notes Invoice Timing'
                     }
 
 
