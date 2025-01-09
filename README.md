@@ -1,8 +1,7 @@
 # finning_python
 Python code for finning sentiment analysis 
 
-Using **Python 3.8.19** which is the latest more stable
-
+Using **Python 3.9.20** which is the latest more stable
 
 
 To install dependencies download **requirements.txt** file and run
