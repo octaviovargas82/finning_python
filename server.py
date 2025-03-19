@@ -7,7 +7,6 @@ app = Flask(__name__)
 env = AppEnv()
  
 port = int(os.environ.get('PORT', 3000))
-<<<<<<< HEAD
 
 @app.route('/hello')
 def hello():
@@ -15,7 +14,7 @@ def hello():
 
 @app.route('/')
 def root():
-   main()
+   main() 
    return "Ended"
 
 @app.route('/deleteUnknowns')
@@ -28,16 +27,5 @@ def _heartBeat():
    heartBeat()
    return "heartBeat"
 
-=======
- 
-@app.route('/hello')
-def hello():
-   return "Hello World!"
- 
-@app.route('/')
-def root():
-   main()
- 
->>>>>>> f97871dea0fa5141baa27381456601c6106fb798
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
