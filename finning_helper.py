@@ -119,9 +119,10 @@ def clasify_comment(type, comment):
 #Send processed data to be inserted in Hana
 def insert_data(pollId, note_type, sentiment, key_words):
     if(len(pollId.strip())!=0 and len(note_type.strip())!=0 and len(sentiment)!=0 and len(sentiment.strip())!=0 and len(key_words.strip())!=0):
-        insert_query='UPSERT "SAPDB1"."TB_MKT_SAN_RES" VALUES (\''+pollId.strip()+'\',\''+note_type.strip()+'\',\''+sentiment.strip().upper()+'\',\''+key_words.strip()+'\') WITH PRIMARY KEY;'
+        insert_query='UPSERT "SAPABAP1"."ZBW_FINNING.ZBW_FINNING_MARK.SAC.NLS::TB_MKT_SAN_RES" VALUES (\''+pollId.strip()+'\',\''+note_type.strip()+'\',\''+sentiment.strip().upper()+'\',\''+key_words.strip()+'\') WITH PRIMARY KEY;'
         response = session.post(finning_queries.SERVICE_END_POINT, data=insert_query)
         rj= response.json()["success"]
+
         if(rj):
           put_info_log(f'Sucessfully saved: {insert_query}') 
         else:  

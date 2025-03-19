@@ -3,7 +3,7 @@ applications:
 - name: finning_sentiment_analysis
   random-route: true
   path: ./
-  memory: 4096M
+  memory: 16384M
   buildpacks: 
   - python_buildpack
   command: python server.py
