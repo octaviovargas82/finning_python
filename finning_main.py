@@ -193,5 +193,5 @@ def main():
           sentiments_report_data = json.dumps(sentiments_response.json())
           sentiment_dict = ast.literal_eval(sentiments_report_data)
           sentiments = sentiment_dict["ROOT"]["select_response"]["row"] #if len (sentiments) == 0 while loop will finish, that means no more SAP HANA records to validate
-
+ 
      return ""
